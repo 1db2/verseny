@@ -34,6 +34,20 @@ namespace Lakas {
                 }
             }
 
+            bool van_szomszed(string elem) {
+                bool valasz = false;
+
+                for (int i = 0; i < uj_alap.GetLength(0); i++) {
+                    for (int j = 0; j < uj_alap.GetLength(1); j++) {
+                        if (uj_alap[i-1, j] != "0" || uj_alap[i + 1, j] != "0" || uj_alap[i, j-1] != "0" || uj_alap[i, j+1] != "0") {
+                            valasz = true;
+                        }
+                    }
+                }
+
+                return valasz;
+            }
+
             for (int i = 0; i < uj_alap.GetLength(0); i++) {
                 for (int j = 0; j < uj_alap.GetLength(1); j++) {
                     Console.Write(uj_alap[i, j] + " ");
