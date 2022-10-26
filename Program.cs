@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -32,6 +32,13 @@ namespace Lakas {
                         uj_alap[i, j] = alaprajz[i, j];
                     }
                 }
+            }
+
+            for (int i = 0; i < uj_alap.GetLength(0); i++) {
+                for (int j = 0; j < uj_alap.GetLength(1); j++) {
+                    Console.Write(uj_alap[i, j] + " ");
+                }
+                Console.WriteLine("");
             }
 
         }
