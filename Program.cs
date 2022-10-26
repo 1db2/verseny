@@ -2,64 +2,35 @@
 using System.IO;
 using System.Linq;
 
-namespace ConsoleApp3 {
+namespace Lakas {
     class Program {
         static void Main(string[] args) {
+            string[] nyers = File.ReadAllLines("alaprajz1.txt");
 
-            string[] sorok = File.ReadAllLines("palyaX.txt");
-            string[,] tabla = new string[sorok.Length, sorok[0].Length];
+            string[] dimenziok = nyers[0].Split(' ');
 
-            for (int i = 0; i < sorok.Length; i++) {
-                for (int j = 0; j < sorok[0].Length; j++) {
-                    tabla[i, j] = Convert.ToString(sorok[i][j]);
+            string[,] alaprajz = new string[int.Parse(dimenziok[0]), int.Parse(dimenziok[1])];
+
+            for (int i = 0; i < int.Parse(dimenziok[0]); i++) {
+                for (int j = 0; j < int.Parse(dimenziok[1]); j++) {
+                    alaprajz[i, j] = Convert.ToString(nyers[i+1][j]);
                 }
             }
 
-            bool charSelect = true;
-            int sor = 0;
-            int oszlop = 0;
-            string selected = "";
+            string[,] uj_alap = new string[alaprajz.GetLength(0), alaprajz.GetLength(1)];
 
-            while (charSelect) {
-                ConsoleKeyInfo key = Console.ReadKey();
-                Console.Clear();
-                switch (key.Key) {
-                    case ConsoleKey.UpArrow:
-                        sor = sor - 1;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        sor = sor + 1;
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        oszlop = oszlop - 1;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        oszlop = oszlop + 1;
-                        break;
-                    case ConsoleKey.Enter:
-                        charSelect = false;
-                        break;
-                }
-                Console.WriteLine("---------");
-                selected = tabla[sor, oszlop];
+            for (int i = 0; i < alaprajz.GetLength(0); i++) {
+                for (int j = 0; j < alaprajz.GetLength(1); j++) {
+                    if (alaprajz[i, j] == "1" && j == 0 || 
+                        alaprajz[i, j] == "1" && j == alaprajz.GetLength(1)-1 ||
+                        alaprajz[i, j] == "1" && i == 0 ||
+                        alaprajz[i, j] == "1" && i == alaprajz.GetLength(0)-1) {
 
-                int rowLength = tabla.GetLength(0);
-                int colLength = tabla.GetLength(1);
-
-                for (int i = 0; i < rowLength; i++) {
-                    for (int j = 0; j < colLength; j++) {
-                        if (i == sor && j == oszlop) {
-                            Console.BackgroundColor = ConsoleColor.White;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(string.Format("{0}", tabla[i, j]));
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.ForegroundColor = ConsoleColor.White;
-                        }
-                        else {
-                            Console.Write(string.Format("{0}", tabla[i, j]));
-                        }
+                        uj_alap[i, j] = "F";
                     }
-                    Console.Write(Environment.NewLine);
+                    else {
+                        uj_alap[i, j] = alaprajz[i, j];
+                    }
                 }
             }
 
